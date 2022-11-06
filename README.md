@@ -2,6 +2,8 @@
  
 - saitensan is a contest scoring system (コンテスト採点システム)
 
+<img src=ss.png>
+
 ## Usage
 
 1. download [saitensan](https://github.com/code4fukui/saitensan/archive/refs/heads/main.zip) and unzip
