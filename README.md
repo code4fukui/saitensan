@@ -1,6 +1,6 @@
 # saitensan
  
-コンテスト採点システム saitensan
+- saitensan is a contest scoring system (コンテスト採点システム)
 
 ## Usage
 
