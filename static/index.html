@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<h1>saitensan</h1>
+
+<div class=name>審査員ID： <input id=inpname readonly=true value=1></div>
+
+<main id="main">
+</main>
+
+<div class=contest>コンテストID： <input id=contest readonly=true value=test></div>
+
+<div class=credit>App: CC BY Code for FUKUI, src on GitHub</div>
+
+<script type="module">
+import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+
+const param = new URLSearchParams(location.search);
+inpname.value = param.get("id");
+contest.value = param.get("contest");
+
+const list = [
+  "さくひんA",
+  "さくひんB",
+  "さくひんC",
+];
+const pnt = [
+  "技術力",
+  "デザイン",
+  "プレゼン",
+];
+const max = 5;
+
+const makeData = () => {
+  const data = {};
+  data.contest = contest.value;
+  data.id = inpname.value;
+  const items = [];
+  data.items = items;
+  const trs = main.querySelectorAll("tr");
+  for (let i = 1; i < trs.length; i++) {
+    const tr = trs[i];
+    const tds = tr.querySelectorAll("td");
+    const d = {};
+    d.title = tds[0].textContent;
+    let sum = 0;
+    d.pnts = {};
+    for (let j = 0; j < pnt.length; j++) {
+      const td = tds[j + 1];
+      const p = parseInt(td.querySelector("select").value);
+      d.pnts[pnt[j]] = p;
+      sum += p;
+    }
+    tds[tds.length - 1].textContent = sum + "点";
+    items.push(d);
+  }
+  return data;
+};
+const update = async () => {
+  const data = makeData();
+  fetchJSON("/api/add", data).catch(e => {
+    alert("採点の送信に失敗しました。");
+  });
+};
+
+const cr = (tag, parent) => {
+  const c = document.createElement(tag);
+  if (parent) {
+    parent.appendChild(c);
+  }
+  return c;
+};
+const makeSelect = () => {
+  const sel = cr("select");
+  for (let i = 1; i <= max; i++) {
+    const op = cr("option", sel);
+    op.textContent = i;
+  }
+  sel.value = (1 + max) / 2;
+  sel.onchange = () => {
+    update();
+  };
+  return sel;
+};
+
+const tbl = cr("table", main);
+const tr = cr("tr", tbl);
+cr("th", tr).textContent = "作品名";
+for (const p of pnt) {
+  cr("th", tr).textContent = p;
+}
+cr("th", tr).textContent = "合計点";
+
+for (const l of list) {
+  const tr = cr("tr", tbl);
+  cr("td", tr).textContent = l;
+  for (const p of pnt) {
+    const td = cr("td", tr);
+    td.appendChild(makeSelect());
+  }
+  cr("td", tr);
+}
+console.log(makeData());
+
+</script>

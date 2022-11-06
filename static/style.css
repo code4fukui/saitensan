@@ -1,0 +1,29 @@
+body {
+  background-color: #222;
+  color: #fff;
+  font-size: 120%;
+}
+#divname {
+  margin: .5em 0 1.5em 0.5em;
+}
+main {
+  margin: 2em 0;
+}
+th {
+  font-size: 80%;
+}
+td, th {
+  text-align: center;
+  padding: .2em .2em;
+}
+select {
+  padding: .3em;
+}
+.judges {
+  margin: 1em 0;
+}
+.credit {
+  margin: 1em 0;
+  color: #ddd;
+  font-size: 80%;
+}

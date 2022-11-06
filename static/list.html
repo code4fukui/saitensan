@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<h1>saitensan 集計</h1>
+
+<main id="main">
+</main>
+<div class=judges>
+集計審査員ID: <span id=judges></span>
+</div>
+
+<div class=contest>コンテストID： <input id=contest readonly=true value=test></div>
+
+<div class=credit>App: CC BY Code for FUKUI, src on GitHub</div>
+
+<script type="module">
+import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
+import { CSV } from "https://js.sabae.cc/CSV.js";
+
+const param = new URLSearchParams(location.search);
+contest.value = param.get("contest");
+
+const makeData = (data) => {
+  const res = {};
+  for (const d of data) {
+    for (const i of d.items) {
+      let t = res[i.title];
+      if (!t) {
+        t = res[i.title] = {};
+      }
+      for (const p in i.pnts) {
+        if (!t[p]) {
+          t[p] = 0;
+        }
+        t[p] += i.pnts[p];
+      }
+    }
+  }
+  const res2 = Object.keys(res).map(k => {
+    const d = { "作品名": k };
+    const sum = Object.values(res[k]).reduce((prev, cur) => prev + cur, 0);
+    Object.assign(d, res[k]);
+    d.合計点 = sum;
+    return d;
+  });
+  const res3 = res2.sort((a, b) => b.合計点 - a.合計点);
+  return res2;
+};
+
+const data = await fetchJSON("/api/get", { contest: contest.value });
+const data2 = makeData(data);
+console.log(data2);
+
+const csv = CSV.fromJSON(data2);
+
+main.appendChild(CSV.makeTable(csv));
+judges.textContent = data.map(d => d.id).join(", ") + " (" + data.length + "人)";
+</script>
