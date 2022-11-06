@@ -4,9 +4,9 @@
 
 ## Usage
 
-1. download [saitensan](saitensan.zip) and unzip
+1. download [saitensan](https://github.com/code4fukui/saitensan/archive/refs/heads/main.zip) and unzip
 
-2. install [Deno](https://deno.land)
+2. install [Deno](https://deno.land/)
 
 3. run prgoram
 ```bash
@@ -17,7 +17,9 @@ deno run -A saitensan.js
 
 5. for owner [http://localhost:8000/list.html?contest=test](http://localhost:8000/list.html?contest=test)
 
-6. edit data [index.html](index.html)
+6. edit data [static/index.html](blob/main/static/index.html)
+
+7. to clear data, see [data/](blob/main/data/)
 
 ## Licence
 
