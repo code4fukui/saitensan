@@ -17,9 +17,9 @@ deno run -A saitensan.js
 
 5. for owner [http://localhost:8000/list.html?contest=test](http://localhost:8000/list.html?contest=test)
 
-6. edit data [static/index.html](blob/main/static/index.html)
+6. edit data [static/index.html](static/index.html)
 
-7. to clear data, see [data/](blob/main/data/)
+7. to clear data, see [data/](data/)
 
 ## Licence
 
