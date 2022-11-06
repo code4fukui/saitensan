@@ -2,7 +2,7 @@
  
 - saitensan is a contest scoring system (コンテスト採点システム)
 
-<img src=ss.png>
+![saitensan screen shot](ss.png)
 
 ## Usage
 
