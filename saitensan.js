@@ -3,21 +3,17 @@ import { dir2array } from "https://js.sabae.cc/dir2array.js";
 
 const mkdir = async (dir) => {
   try {
-    console.log(dir)
     await Deno.mkdir(dir);
   } catch (e) {
-    console.log(e);
   }
 };
 
 serveAPI("/api", async (param, req, path) => {
   const dir = param.contest;
-  console.log(param, path);
   if (dir.indexOf("..") >= 0 || dir.indexOf("/") >= 0) {
     return;
   }
   if (path == "/api/add") {
-    console.log(dir)
     await mkdir("data/" + dir);
     const id = parseInt(param.id);
     if (isNaN(id)) {
